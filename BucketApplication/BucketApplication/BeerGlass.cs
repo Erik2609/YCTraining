@@ -20,13 +20,6 @@ namespace BucketApplication
             }
         }
 
-        public static BeerGlass operator +(BeerGlass beerGlass1, BeerGlass beerGlass2)
-        {
-            beerGlass1.FillBucket(beerGlass2.BucketFilledAmount);
-            beerGlass2.EmptyBucket();
-            return beerGlass1;
-        }
-
         public static BeerGlass operator +(BeerGlass beerGlass1, Bucket bucket)
         {
             beerGlass1.FillBucket(bucket.BucketFilledAmount);

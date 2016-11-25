@@ -20,13 +20,6 @@ namespace BucketApplication
             
         }
 
-        public static RainBarrel operator +(RainBarrel rainBarrel1, RainBarrel rainBarrel2)
-        {
-            rainBarrel1.FillBucket(rainBarrel2.BucketFilledAmount);
-            rainBarrel2.EmptyBucket();
-            return rainBarrel1;
-        }
-
         public static RainBarrel operator +(RainBarrel rainBarrel1, Bucket bucket)
         {
             rainBarrel1.FillBucket(bucket.BucketFilledAmount);
