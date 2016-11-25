@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace BucketApplication
 {
-    public static class BucketUnitTest
-    {
-        public static bool TestTypes()
+    public static class BucketUnitTest //JB: The name of the type in .cs file is conventionally identical to the .cs file name
+	{
+		//JB: I wouldn't call these 'unit tests'. Yes, what you have written here are tests, but not really _unit_ tests. All other names (except for the word 'unit') are okay. 
+		public static bool TestTypes()
         {
             var rainBarrel1 = new RainBarrel(RainBarrel.Size.Large);
             var rainBarrel2 = new RainBarrel(RainBarrel.Size.Medium);

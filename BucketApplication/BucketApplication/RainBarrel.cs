@@ -17,10 +17,10 @@ namespace BucketApplication
 
         public RainBarrel(Size size) : base((int) size)
         {
-            
-        }
+			//JB: This still allow for creating a rainbarrel with an invalid size: e.g. new RainBarrel((RainBarrel.Size)81);
+		}
 
-        public static RainBarrel operator +(RainBarrel rainBarrel1, Bucket bucket)
+		public static RainBarrel operator +(RainBarrel rainBarrel1, Bucket bucket)
         {
             rainBarrel1.FillBucket(bucket.BucketFilledAmount);
             bucket.EmptyBucket();
