@@ -1,16 +1,15 @@
 ﻿namespace BucketApplication
 {
-    public class OilBarrel : Bucket
+    public class OilBarrel : Container
     {
-        public OilBarrel() : base(159)
+        public OilBarrel() : base(159, null, null)
         {
             
         }
 
-        public static OilBarrel operator +(OilBarrel oilBarrel1, Bucket bucket)
+        public static OilBarrel operator +(OilBarrel oilBarrel1, Container container)
         {
-            oilBarrel1.FillBucket(bucket.BucketFilledAmount);
-            bucket.EmptyBucket();
+			FillContainer1InContainer2(oilBarrel1, container);
             return oilBarrel1;
         }
     }

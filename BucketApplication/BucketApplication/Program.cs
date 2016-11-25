@@ -6,10 +6,10 @@ namespace BucketApplication
     {
         static void Main(string[] args)
         {
-            BucketUnitTest.TestCreateBucket();
-            BucketUnitTest.TestFillBucket();
-            BucketUnitTest.Test3AddedBuckets();
-            BucketUnitTest.TestTypes();
+            Tests.TestCreateBucket();
+            Tests.TestFillBucket();
+            Tests.Test3AddedBuckets();
+            Tests.TestTypes();
             Console.ReadLine();
         }
     }
