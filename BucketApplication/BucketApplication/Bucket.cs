@@ -8,7 +8,7 @@ namespace BucketApplication
     {
         #region Properties
 
-        public readonly double BucketMaxAmount;
+        public double BucketMaxAmount { get; protected set; }
 
         private double _bucketFilledAmount;
 

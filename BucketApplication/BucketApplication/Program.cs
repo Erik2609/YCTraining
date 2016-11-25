@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BucketApplication
 {
@@ -13,6 +9,7 @@ namespace BucketApplication
             BucketUnitTest.TestCreateBucket();
             BucketUnitTest.TestFillBucket();
             BucketUnitTest.Test3AddedBuckets();
+            BucketUnitTest.TestTypes();
             Console.ReadLine();
         }
     }
