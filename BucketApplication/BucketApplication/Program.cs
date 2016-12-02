@@ -10,6 +10,7 @@ namespace BucketApplication
             Tests.TestFillBucket();
             Tests.Test3AddedBuckets();
             Tests.TestTypes();
+            Tests.ManualTest();
             Console.ReadLine();
         }
     }

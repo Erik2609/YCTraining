@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace BucketApplication
 {
+    public delegate bool ShouldContainerOverflowDelegate(Container bucket);
+
     public delegate void ContainerOverflowDelegate(Container bucket, double amount);
 
     public class Container
@@ -56,17 +58,27 @@ namespace BucketApplication
 
         #region Methods
 
-        public void FillBucket(double fillAmount)
+        public double FillBucket(double fillAmount)
         {
             if (BucketFilledAmount + fillAmount < Size)
             {
                 BucketFilledAmount += fillAmount;
+                return 0.0;
             }
             else
             {
                 double spillAmount = fillAmount - (Size - BucketFilledAmount);
                 BucketFilledAmount = Size;
-                ContainerOverflowEvent?.Invoke(this, spillAmount);
+                bool? shouldSpill = ShouldContainerOverflowEvent?.Invoke(this);
+                if (shouldSpill != null && !shouldSpill.Value)
+                {
+                    return spillAmount;
+                }
+                else
+                {
+                    ContainerOverflowEvent?.Invoke(this, spillAmount);
+                    return 0;
+                }
             }
         }
 
@@ -86,16 +98,18 @@ namespace BucketApplication
             }
         }
 
-        protected static void FillContainer1InContainer2(Container container1, Container container2)
+        protected static void FillContainer2InContainer1(Container container1, Container container2)
         {
-            container1.FillBucket(container2.BucketFilledAmount);
-            container2.EmptyBucket();
+            double restAmount = container1.FillBucket(container2.BucketFilledAmount);
+            container2.EmptyBucket(container2.BucketFilledAmount - restAmount);
         }
 
         #endregion
 
 
         #region Events
+
+        public event ShouldContainerOverflowDelegate ShouldContainerOverflowEvent;
 
         public event ContainerOverflowDelegate ContainerOverflowEvent;
 

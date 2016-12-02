@@ -25,7 +25,7 @@ namespace BucketApplication
 
         public static RainBarrel operator +(RainBarrel rainBarrel1, Container container)
         {
-            FillContainer1InContainer2(rainBarrel1, container);
+            FillContainer2InContainer1(rainBarrel1, container);
             return rainBarrel1;
         }
     }

@@ -18,7 +18,7 @@ namespace BucketApplication
 
         public static BeerGlass operator +(BeerGlass beerGlass1, Container container)
         {
-            FillContainer1InContainer2(beerGlass1, container);
+            FillContainer2InContainer1(beerGlass1, container);
             return beerGlass1;
         }
     }

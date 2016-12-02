@@ -8,7 +8,45 @@ namespace BucketApplication
 {
     public static class Tests
 	{
-		public static bool TestTypes()
+        public static void ManualTest()
+        {
+            var bucket1 = new Bucket();
+            var bucket2 = new Bucket();
+
+            Console.WriteLine("Fill Bucket 1 with size 12 with n liters:");
+            double d1 = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Fill Bucket 2 with size 12 n liters:");
+            double d2 = double.Parse(Console.ReadLine());
+
+            bucket1.FillBucket(d1);
+            bucket2.FillBucket(d2);
+            bucket1.ShouldContainerOverflowEvent += ShouldContainerOverflowEvent;
+            bucket1.ContainerOverflowEvent += OnOverflowShouldSpillEvent;
+
+            bucket1 += bucket2;
+
+            Console.WriteLine($"Bucket1 current: {bucket1.BucketFilledAmount}, max size {bucket1.Size}");
+            Console.WriteLine($"Bucket2 current: {bucket2.BucketFilledAmount}, max size {bucket2.Size}");
+            Console.WriteLine();
+        }
+
+        private static bool ShouldContainerOverflowEvent(Container container)
+        {
+            Console.WriteLine($"Should the container of size: {container} overflow? Y|N?");
+            if (Console.ReadLine()?.ToUpper() == "Y")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private static void OnOverflowShouldSpillEvent(Container bucket, double amount)
+        {
+            Console.WriteLine($"A container of size {bucket.Size} spilled {amount}");
+        }
+
+        public static bool TestTypes()
         {
             var rainBarrel1 = new RainBarrel(RainBarrel.Type.Large);
             var rainBarrel2 = new RainBarrel(RainBarrel.Type.Medium);
@@ -16,7 +54,7 @@ namespace BucketApplication
             rainBarrel1.FillBucket(100);
             rainBarrel2.FillBucket(100);
 
-            rainBarrel1.ContainerOverflowEvent += OnContainerOverflowEvent;
+            rainBarrel1.ContainerOverflowEvent += OnContainerShouldOverflowEvent;
 
             Console.WriteLine("Expected output: " 
                 + $"A bucket of size {rainBarrel1.Size}, overflowed 40");
@@ -39,7 +77,7 @@ namespace BucketApplication
 
             Console.WriteLine("Expected output: " 
                 + $"A bucket of size {beerGlass.Size}, overflowed 149.5");
-            beerGlass.ContainerOverflowEvent += OnContainerOverflowEvent;
+            beerGlass.ContainerOverflowEvent += OnContainerShouldOverflowEvent;
             beerGlass += oilbarrel;
 
             if (beerGlass.BucketFilledAmount != 0.5 || beerGlass.Size != 0.5 ||
@@ -59,19 +97,21 @@ namespace BucketApplication
         {
             var bucket1 = new Bucket();
 
-            if (bucket1.Size != 10 || bucket1.BucketFilledAmount != 0)
+            if (bucket1.Size != 12 || bucket1.BucketFilledAmount != 0)
             {
                 Console.WriteLine("Bucket creation test 1 failed, unexpected outcome");
                 return false;
             }
 
             Console.WriteLine("Expected output: " + "Minimum size of a container is 10");
-            var bucket2 = new Bucket(5);
-
-            if (bucket2.Size != 10 || bucket2.BucketFilledAmount != 0)
+            try
             {
+                var bucket2 = new Bucket(5);
                 Console.WriteLine("Bucket creation test 2 failed, unexpected outcome");
                 return false;
+            }
+            catch (ArgumentException)
+            {
             }
 
             var bucket3 = new Bucket(20);
@@ -100,7 +140,7 @@ namespace BucketApplication
             }
 
             Bucket bucket2 = new Bucket(20);
-            bucket2.ContainerOverflowEvent += Bucket2OnContainerOverflowEventTest;
+            bucket2.ContainerOverflowEvent += Bucket2OnContainerShouldOverflowEventTest;
             bucket2.FillBucket(30);
 
             if (bucket2.Size != 20 || bucket2.BucketFilledAmount != 20)
@@ -132,11 +172,11 @@ namespace BucketApplication
         public static bool Test3AddedBuckets()
         {
             var bucket1 = new Bucket(15);
-            bucket1.ContainerOverflowEvent += OnContainerOverflowEvent;
+            bucket1.ContainerOverflowEvent += OnContainerShouldOverflowEvent;
             var bucket2 = new Bucket(20);
-            bucket2.ContainerOverflowEvent += OnContainerOverflowEvent;
+            bucket2.ContainerOverflowEvent += OnContainerShouldOverflowEvent;
             var bucket3 = new Bucket(25);
-            bucket3.ContainerOverflowEvent += OnContainerOverflowEvent;
+            bucket3.ContainerOverflowEvent += OnContainerShouldOverflowEvent;
 
             bucket3.FillBucket(20);
             Console.WriteLine("Expected output: A container of size 15 overflowed 5");
@@ -166,13 +206,13 @@ namespace BucketApplication
             return true;
         }
 
-        private static void OnContainerOverflowEvent(Container container, double amount)
+        private static void OnContainerShouldOverflowEvent(Container container, double amount)
         {
             Console.WriteLine($"A container of size {container.Size}, overflowed {amount}");
         }
 
 
-        private static void Bucket2OnContainerOverflowEventTest(Container container, double amount)
+        private static void Bucket2OnContainerShouldOverflowEventTest(Container container, double amount)
         {
             if (amount != 10)
             {

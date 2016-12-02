@@ -23,7 +23,7 @@ namespace BucketApplication
 
         public static Bucket operator +(Bucket bucket1, Container container)
         {
-            FillContainer1InContainer2(bucket1, container);
+            FillContainer2InContainer1(bucket1, container);
             return bucket1;
         }
         #endregion
