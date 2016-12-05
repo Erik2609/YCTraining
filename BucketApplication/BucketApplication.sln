@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketApplication", "BucketApplication\BucketApplication.csproj", "{82F2EC4F-F6D8-41DE-9A62-BF59357973A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAcces", "DataAcces\DataAcces.csproj", "{AD7B08A8-D89D-4177-9F67-A6D39F215FB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMonitor", "StudyMonitor\StudyMonitor.csproj", "{093E7C50-79C1-4490-8B26-BBD0FACB2491}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{82F2EC4F-F6D8-41DE-9A62-BF59357973A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82F2EC4F-F6D8-41DE-9A62-BF59357973A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82F2EC4F-F6D8-41DE-9A62-BF59357973A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7B08A8-D89D-4177-9F67-A6D39F215FB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7B08A8-D89D-4177-9F67-A6D39F215FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7B08A8-D89D-4177-9F67-A6D39F215FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7B08A8-D89D-4177-9F67-A6D39F215FB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{093E7C50-79C1-4490-8B26-BBD0FACB2491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{093E7C50-79C1-4490-8B26-BBD0FACB2491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{093E7C50-79C1-4490-8B26-BBD0FACB2491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{093E7C50-79C1-4490-8B26-BBD0FACB2491}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
