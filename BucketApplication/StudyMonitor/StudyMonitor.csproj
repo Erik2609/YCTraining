@@ -66,7 +66,10 @@
     </ApplicationDefinition>
     <Compile Include="DatabaseAdapter.cs" />
     <Compile Include="StudyCase.cs" />
-    <Compile Include="StudyCaseType.cs" />
+    <Compile Include="StudyCaseControl.xaml.cs">
+      <DependentUpon>StudyCaseControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudyTypes.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,6 +82,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StudyCaseControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

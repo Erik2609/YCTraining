@@ -10,7 +10,7 @@ namespace StudyMonitor
 {
     public class DatabaseAdapter
     {
-        public static List<StudyCase> GetStudyCases()
+        public static ObservableCollection<StudyCase> GetStudyCases()
         {
 
             var listOfStudyCases = DatabaseAcces.TestGetStudyCases();
@@ -43,7 +43,7 @@ namespace StudyMonitor
         } 
 
 
-        private static List<StudyCase> ConvertDBStudyCase(DbSet<DataAcces.StudyCase> dbsetStudyCases)
+        private static ObservableCollection<StudyCase> ConvertDBStudyCase(DbSet<DataAcces.StudyCase> dbsetStudyCases)
         {
             List<StudyCase> convertedStudyCases = new List<StudyCase>();
             foreach (var dbStudyCase in dbsetStudyCases)
@@ -58,7 +58,7 @@ namespace StudyMonitor
                     timeSpent.Second), dateOfStudy));
             }
 
-            return convertedStudyCases;
+            return new ObservableCollection<StudyCase>(convertedStudyCases);
         }
 
         private static DbSet<DataAcces.Type> GetDBStudyTypes()

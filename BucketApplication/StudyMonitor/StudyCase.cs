@@ -30,6 +30,11 @@ namespace StudyMonitor
             set { _description = value; }
         }
 
+        public string Info
+        {
+            get { return $"{ToString()}, \n {Description}"; }
+        }
+
         #endregion
 
         #region Constructors
@@ -38,7 +43,7 @@ namespace StudyMonitor
         {
             _studyCaseType = caseType;
         }
-
+        
         public StudyCase(string caseType, string description, TimeSpan timeSpan, DateTime dateOfStudy) : this(caseType)
         {
             Description = description;

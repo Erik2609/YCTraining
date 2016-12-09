@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace StudyMonitor
@@ -10,7 +9,7 @@ namespace StudyMonitor
     public partial class MainWindow : Window
     {
         public StudyCase ActiveStudyCase;
-        public List<StudyCase> StudyCases = new List<StudyCase>();
+        public ObservableCollection<StudyCaseControl> StudyCaseControllers { get; set; } = new ObservableCollection<StudyCaseControl>(); 
         private StudyTypes _studyTypes = new StudyTypes();
 
         public ObservableCollection<string> StudyTypes
@@ -22,26 +21,28 @@ namespace StudyMonitor
         public MainWindow()
         {
 
-            this.StudyTypes = DatabaseAdapter.GetStudyTypes();
+            StudyTypes = DatabaseAdapter.GetStudyTypes();
             var studyCases = DatabaseAdapter.GetStudyCases();
 
-            InitializeComponent();
-
-            if (studyCases != null)
-            {
-                StudyCases = studyCases;
-            }
             foreach (var studyCase in studyCases)
             {
-                textBlockCases.Text += studyCase + "\n";
+                StudyCaseControllers.Add(new StudyCaseControl(studyCase));
             }
+
+            InitializeComponent();
         }
 
+        /// <summary>
+        /// Starts a study case
+        /// </summary>
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
             StartCase();
         }
 
+        /// <summary>
+        /// Stops and saves a study case
+        /// </summary>
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveStudyCase == null)
@@ -51,16 +52,18 @@ namespace StudyMonitor
             SaveCase();
 
             // Clean UI
-            textBlockCases.Text += ActiveStudyCase + "\n";
             LabelStudyCaseStatus.Content = string.Empty;
 
-
+            // Reset Active Study Case
             ActiveStudyCase = null;
-
-
 
         }
 
+        /// <summary>
+        /// Starts a study case
+        /// Enables the stop button
+        /// Disables the start button
+        /// </summary>
         private void StartCase()
         {
             ActiveStudyCase = new StudyCase(comboBoxCaseType.Text);
@@ -70,6 +73,11 @@ namespace StudyMonitor
             stopButton.IsEnabled = true;
         }
 
+        /// <summary>
+        /// End a study case
+        /// Enables the start button
+        /// Disables the stop button
+        /// </summary>
         private void StopCase()
         {
             ActiveStudyCase.StopTimer();
@@ -78,10 +86,14 @@ namespace StudyMonitor
             stopButton.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Saves the study case to the database,
+        /// Adds the study case to the window
+        /// </summary>
         private void SaveCase()
         {
             DatabaseAdapter.SaveToDatabase(ActiveStudyCase);
-            StudyCases.Add(ActiveStudyCase);
+            StudyCaseControllers.Add(new StudyCaseControl(ActiveStudyCase));
         }
     }
 }
