@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace StudyMonitor
@@ -10,12 +10,23 @@ namespace StudyMonitor
     public partial class MainWindow : Window
     {
         public StudyCase ActiveStudyCase;
-        public List<StudyCase> StudyCases = new List<StudyCase>(); 
+        public List<StudyCase> StudyCases = new List<StudyCase>();
+        private StudyTypes _studyTypes = new StudyTypes();
+
+        public ObservableCollection<string> StudyTypes
+        {
+            get { return _studyTypes.StudyTypesCollection; }
+            set { _studyTypes.StudyTypesCollection = value; }
+        }
+
         public MainWindow()
         {
-            InitializeComponent();
-            InitializeComboBox();
+
+            this.StudyTypes = DatabaseAdapter.GetStudyTypes();
             var studyCases = DatabaseAdapter.GetStudyCases();
+
+            InitializeComponent();
+
             if (studyCases != null)
             {
                 StudyCases = studyCases;
@@ -28,17 +39,7 @@ namespace StudyMonitor
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            if(ActiveStudyCase == null)
-                newCaseButton_Click(sender, e);
-
-            ActiveStudyCase.StartTimer();
-            textBlockCases.Text += $"Starting new {ActiveStudyCase.StudyCaseType} \n";
-
-        }
-
-        private void newCaseButton_Click(object sender, RoutedEventArgs e)
-        {
-            ActiveStudyCase = new StudyCase(comboBoxCaseType.Text);
+            StartCase();
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
@@ -46,24 +47,41 @@ namespace StudyMonitor
             if (ActiveStudyCase == null)
                 return;
 
-            ActiveStudyCase.StopTimer();
-            ActiveStudyCase.Description = textBoxDescription.Text;
+            StopCase();
+            SaveCase();
 
+            // Clean UI
             textBlockCases.Text += ActiveStudyCase + "\n";
+            LabelStudyCaseStatus.Content = string.Empty;
 
-            DatabaseAdapter.SaveToDatabase(ActiveStudyCase);
-            StudyCases.Add(ActiveStudyCase);
+
             ActiveStudyCase = null;
+
+
+
         }
 
-        private void InitializeComboBox()
+        private void StartCase()
         {
-            var studyTypes = DatabaseAdapter.GetStudyTypes();
+            ActiveStudyCase = new StudyCase(comboBoxCaseType.Text);
+            ActiveStudyCase.StartTimer();
+            LabelStudyCaseStatus.Content = $"Running {ActiveStudyCase.StudyCaseType} ...\n";
+            startButton.IsEnabled = false;
+            stopButton.IsEnabled = true;
+        }
 
-            foreach (var studyType in studyTypes)
-            {
-                comboBoxCaseType.Items.Add(studyType);
-            }
+        private void StopCase()
+        {
+            ActiveStudyCase.StopTimer();
+            ActiveStudyCase.Description = textBoxDescription.Text;
+            startButton.IsEnabled = true;
+            stopButton.IsEnabled = false;
+        }
+
+        private void SaveCase()
+        {
+            DatabaseAdapter.SaveToDatabase(ActiveStudyCase);
+            StudyCases.Add(ActiveStudyCase);
         }
     }
 }

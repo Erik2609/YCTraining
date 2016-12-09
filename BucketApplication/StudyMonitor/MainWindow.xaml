@@ -1,21 +1,26 @@
-﻿<Window x:Class="StudyMonitor.MainWindow"
+﻿<Window 
+        DataContext ="{Binding RelativeSource ={RelativeSource Self}}" 
+        x:Class="StudyMonitor.MainWindow" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudyMonitor"
+        xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         mc:Ignorable="d"
         Title="MainWindow" Height="466.8" Width="614.6">
     <Grid>
         <Button x:Name="startButton" Content="Start Study" Margin="0,10,10.4,0" VerticalAlignment="Top" Click="startButton_Click" HorizontalAlignment="Right" Width="75"/>
-        <Button x:Name="stopButton" Content="Stop Study" HorizontalAlignment="Right" Margin="0,34,10.4,0" VerticalAlignment="Top" Width="75" Click="stopButton_Click"/>
+        <Button x:Name="stopButton" Content="Stop Study" HorizontalAlignment="Right" Margin="0,34,10.4,0" VerticalAlignment="Top" Width="75" Click="stopButton_Click" IsEnabled="False"/>
         <Label x:Name="studyCaseLabel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="newCaseButton" Content="New Case" HorizontalAlignment="Left" Margin="135,13,0,0" VerticalAlignment="Top" Width="75" Click="newCaseButton_Click"/>
-        <ComboBox x:Name="comboBoxCaseType" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+        <ComboBox x:Name="comboBoxCaseType" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" ItemsSource="{Binding StudyTypes}">
         </ComboBox>
-        <TextBlock x:Name="textBlockCases" Margin="10,142,10.4,9.8" TextWrapping="Wrap" Background="#FFDDDDDD"/>
-        <TextBox x:Name="textBoxDescription" HorizontalAlignment="Left" Height="69" Margin="10,68,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="253"/>
+        <TextBlock x:Name="textBlockCases" Text="{Binding StudyCases}" Margin="10,142,10.4,9.8" TextWrapping="Wrap" Background="#FFDDDDDD"/>
+        <TextBox x:Name="textBoxDescription" HorizontalAlignment="Left" Height="69" Margin="10,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="253"/>
         <Label x:Name="label" Content="Description" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="74"/>
+        <Label x:Name="label1" Content="Status: " HorizontalAlignment="Left" Margin="144,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="LabelStudyCaseStatus" HorizontalAlignment="Left" Margin="197,10,0,0" VerticalAlignment="Top"/>
 
     </Grid>
+
 </Window>

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace StudyMonitor
 {
     public class StudyCase
     {
-        private readonly string _studyCaseType = "StudyCase";
+        private readonly string _studyCaseType;
         private string _description;
+        private DateTime _dateOfStudy;
 
         #region Properties
 
@@ -21,6 +17,12 @@ namespace StudyMonitor
 
         protected DateTime StartTime { get; set; }
         public TimeSpan TimeSpent { get; set; }
+
+        public DateTime DateOfStudy
+        {
+            get { return _dateOfStudy; }
+            set { _dateOfStudy = value; }
+        }
 
         public string Description
         {
@@ -34,13 +36,14 @@ namespace StudyMonitor
 
         public StudyCase(string caseType)
         {
-            this._studyCaseType = caseType;
+            _studyCaseType = caseType;
         }
 
-        public StudyCase(string caseType, string description, TimeSpan timeSpan) : this(caseType)
+        public StudyCase(string caseType, string description, TimeSpan timeSpan, DateTime dateOfStudy) : this(caseType)
         {
-            this.Description = description;
-            this.TimeSpent = timeSpan;
+            Description = description;
+            TimeSpent = timeSpan;
+            DateOfStudy = dateOfStudy;
         }
 
         #endregion
@@ -48,12 +51,13 @@ namespace StudyMonitor
         #region Methods
         public void StartTimer()
         {
-            this.StartTime = DateTime.Now;
+            StartTime = DateTime.Now;
         }
 
         public void StopTimer()
         {
-            this.TimeSpent = DateTime.Now - this.StartTime;
+            TimeSpent = DateTime.Now - StartTime;
+            DateOfStudy = new DateTime(StartTime.Year, StartTime.Month, StartTime.Day);
         }
 
         public string GetTimeSpent()
@@ -63,7 +67,7 @@ namespace StudyMonitor
 
         public override string ToString()
         {
-            return $"{StudyCaseType}: for {TimeSpent.Hours} hours, {TimeSpent.Minutes} minutes and {TimeSpent.Seconds} seconds.";
+            return $"{DateOfStudy.ToShortDateString()}, {StudyCaseType}: for {TimeSpent.Hours} hours, {TimeSpent.Minutes} minutes and {TimeSpent.Seconds} seconds.";
         }
 
         #endregion
